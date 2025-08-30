@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PyFrame Greet Example</title>
+  <style>
+    body {
+      font-family: "Inter", sans-serif;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #e0f7fa, #e8f5e9);
+    }
+
+    .card {
+      background: white;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+      width: 400px;
+      height: 350px; /* feste Höhe für bessere Zentrierung */
+      display: flex;
+      flex-direction: column;
+      justify-content: center; /* Inhalte in der Mitte */
+      align-items: center;     /* horizontal in der Mitte */
+      text-align: center;
+      animation: fadeIn 0.6s ease;
+    }
+
+    h2 {
+      margin-bottom: 1rem;
+      color: #333;
+    }
+
+    input {
+      width: 80%;
+      padding: 0.7rem 1rem;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 1rem;
+      margin-top: 1rem;
+      transition: all 0.2s;
+      text-align: center;
+    }
+
+    input:focus {
+      border-color: #28a745;
+      outline: none;
+      box-shadow: 0 0 6px rgba(40,167,69,0.4);
+    }
+
+    button {
+      margin-top: 1.2rem;
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #28a745, #218838);
+      color: white;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.2s ease;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(33, 136, 56, 0.3);
+    }
+
+    #output {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: #f9f9f9;
+      border-radius: 10px;
+      font-family: monospace;
+      color: #555;
+      min-height: 40px;
+      border: 1px solid #eee;
+      text-align: left;
+      word-break: break-word;
+      width: 90%;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>✨ Greet Backend</h2>
+    <input id="nameInput" type="text" placeholder="Enter a name...">
+    <button id="btnGreet">Send Greeting</button>
+    <div id="output">Waiting for response...</div>
+  </div>
+
+  <script>
+    const output = document.getElementById("output");
+    const input = document.getElementById("nameInput");
+
+    document.getElementById("btnGreet").addEventListener("click", async () => {
+      const name = input.value.trim() || "Alice";
+      output.textContent = "⏳ Sending request...";
+      try {
+        const result = await window.invoke("greet", { name });
+        output.textContent = result;
+      } catch (err) {
+        output.textContent = "❌ Error: " + err.message;
+      }
+    });
+  </script>
+</body>
+</html>
